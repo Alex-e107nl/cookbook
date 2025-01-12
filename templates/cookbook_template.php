@@ -263,7 +263,7 @@ $COOKBOOK_TEMPLATE['print_recipe_layout'] = '
 ';
 
 $COOKBOOK_TEMPLATE['related']['caption']    = '{LAN=LAN_CB_RELATEDRECIPES}';
-$COOKBOOK_TEMPLATE['related']['start']      = '{SETIMAGE: w=300&h=300&crop=1}<div class="row">';
+$COOKBOOK_TEMPLATE['related']['start']      = '{SETIMAGE: w=450&h=450&crop=1}<div class="row">';
 $COOKBOOK_TEMPLATE['related']['item']       = '<div class="col-md-3 col-sm-6 h-100">
                                                  <a href="{RELATED_URL}">{RELATED_IMAGE}</a>
                                                  <h6><a href="{RELATED_URL}">{RELATED_TITLE}</a></h6>

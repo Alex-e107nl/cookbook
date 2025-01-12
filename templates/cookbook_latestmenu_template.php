@@ -17,7 +17,7 @@ $COOKBOOK_LATESTMENU_TEMPLATE['default']['start']   = '<div class="cookbook_late
 $COOKBOOK_LATESTMENU_TEMPLATE['default']['item']    = "
 <div class='row'>
     <div class='col-md-4 my-2'>
-        {SETIMAGE: w=200}
+        {SETIMAGE: w=450}
         <a href='{COOKBOOK_RECIPE_URL}'>{COOKBOOK_RECIPE_THUMB}</a>
     </div>
 
