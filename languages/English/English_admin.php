@@ -11,9 +11,14 @@
 define("LAN_CB_MANAGE_RECIPES",  	"Recipe overview");
 define("LAN_CB_CREATE_RECIPE",  	"Add a recipe");
 
+define("LAN_CB_THUMBNAIL_LOCAL", "Local");
+define("LAN_CB_THUMBNAIL_REMOTE", "Remote");
+define("LAN_CB_THUMBNAIL_REMOTE_PLACEHOLDER", "eg. http://some-website.com/image.jpg");
+define("LAN_CB_THUMBNAIL_REMOTE_TITLE", "This will override any local image you have set.");
 
 // HELP 
-define("LAN_CB_HELP_TIME", 			"Preparation time of the recipe (in minutes).");
+define("LAN_CB_HELP_ACTIVETIME", 	"Active time of the recipe (in minutes).");
+define("LAN_CB_HELP_TOTALTIME",     "Total time of the recipe (in minutes).");
 define("LAN_CB_HELP_PERSONS", 		"Amount of people that the recipe is for.");
 define("LAN_CB_HELP_KEYWORDS", 		"Keywords that are applicable to the recipe.");
 define("LAN_CB_HELP_AUTHORRATING",  "Author rating of the recipe. Between 1 and 3 stars.");
@@ -47,6 +52,12 @@ define("LAN_CB_PREF_LATEST_ITEMSPP_HELP",   "Defines how many recipes are shown 
 
 define("LAN_CB_PREF_DATEFORMAT",        "Date format"); 
 define("LAN_CB_PREF_DATEFORMAT_HELP",   "Uses the format defined in Admin Area > Preferences > Date Display options");
+define("LAN_CB_PREF_DATEFORMAT_LONG",   "Long date format");
+define("LAN_CB_PREF_DATEFORMAT_SHORT",   "Short date format");
+define("LAN_CB_PREF_DATEFORMAT_RELATIVE", "Relative date format");
+
+define("LAN_CB_PREF_INGREDIENT_CHECKBOXES",         "Ingredient checkboxes");
+define("LAN_CB_PREF_INGREDIENT_CHECKBOXES_HELP",    "Displays a checkbox for every ingredient in the ingredient list, when using unordered lists");  
 
     //1 - Posting options
 define("LAN_CB_PREF_COMMENTS",      "Comments on recipes");
@@ -64,6 +75,9 @@ define("LAN_CB_PREF_USERRATINGCLASS_HELP", "Userclass that is allowed to rate re
 
 define("LAN_CB_PREF_DIFFICULTYLEVEL",      "Use difficulty levels");
 define("LAN_CB_PREF_DIFFICULTYLEVEL_HELP", "When enabled, recipes can have three difficulty levels: easy, moderate, hard");
+
+define("LAN_CB_PREF_ACTIVETIME",      "Use active time");
+define("LAN_CB_PREF_ACTIVETIME_HELP", "When enabled, recipes can also include the amount of active time that is required for the recipe.");
 
 define("LAN_CB_PREF_SHOWRELATED",      "Show related recipes");
 define("LAN_CB_PREF_SHOWRELATED_HELP", "When enabled, other recipes related to the recipe that is being viewed are shown");

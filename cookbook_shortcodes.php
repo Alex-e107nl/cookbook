@@ -42,7 +42,17 @@ class cookbook_shortcodes extends e_shortcode
     		$thumbImage = "{e_PLUGIN}cookbook/images/default_image.webp";
     	}
 
-        $thumbUrl = e107::getParser()->thumbUrl($thumbImage);
+        // Check if the set thumbnail is an external URL or a local media manager managed file
+        if(filter_var($thumbImage, FILTER_VALIDATE_URL) === false) 
+        {
+            $thumbUrl = e107::getParser()->thumbUrl($thumbImage);
+        }
+        else
+        {
+            $thumbUrl = $thumbImage; 
+        }
+
+        
 
         return '<img class="'.$class.'" src="'.$thumbUrl.'" alt="'.$this->sc_cookbook_recipe_anchor.'" />';
     }
@@ -62,7 +72,15 @@ class cookbook_shortcodes extends e_shortcode
             $thumbImage = "{e_PLUGIN}cookbook/images/default_image.webp";
         }
 
-        $thumbUrl = e107::getParser()->thumbUrl($thumbImage);
+        // Check if the set thumbnail is an external URL or a local media manager managed file
+        if(filter_var($thumbImage, FILTER_VALIDATE_URL) === false) 
+        {
+            $thumbUrl = e107::getParser()->thumbUrl($thumbImage);
+        }
+        else
+        {
+            $thumbUrl = $thumbImage; 
+        }
 
         return $thumbUrl;
     }
@@ -294,17 +312,49 @@ class cookbook_shortcodes extends e_shortcode
     */
     function sc_cookbook_recipe_persons($parm = array())
     {
-        return $this->var["r_persons"];
+        if(!$this->var["r_persons"])
+        {
+            return "&nbsp;"; // To align icons properly 
+        }
+        else
+        {
+            return $this->var["r_persons"];
+        }
     }
 
     /**
-    * Returns the time value of a recipe
+    * Returns the active time value of a recipe
     *
-    * @example {COOKBOOK_RECIPE_TIME}
+    * @example {COOKBOOK_RECIPE_ACTIVETIME}
     */
-    function sc_cookbook_recipe_time($parm = array())
+    function sc_cookbook_recipe_activetime($parm = array())
     {
-        return $this->var["r_time"];
+        if(!$this->var["r_activetime"])
+        {
+            return "&nbsp;"; // To align icons properly 
+        }
+        else
+        {
+            return $this->var["r_activetime"];
+        }
+    }
+
+    /**
+    * Returns the total time value of a recipe
+    *
+    * @example {COOKBOOK_RECIPE_TOTALTIME}
+    */
+    function sc_cookbook_recipe_totaltime($parm = array())
+    {
+        if(!$this->var["r_totaltime"])
+        {
+            return "&nbsp;"; // To align icons properly 
+        }
+        else
+        {
+            return $this->var["r_totaltime"];
+        }
+         
     }
 
     /**
@@ -321,7 +371,7 @@ class cookbook_shortcodes extends e_shortcode
        
         if(e107::getPlugPref('cookbook', 'recipe_authorrating') == false)
         {
-            return false;
+            return "&nbsp;";
         }
 
         // Check if we want to display the stars
@@ -330,7 +380,7 @@ class cookbook_shortcodes extends e_shortcode
 
             return e107::js('footer-inline', '
                 $(function() {
-                    $("#rating").raty({
+                    $("#authorrating").raty({
                         readOnly: true,
                         number: 3,
                         score: '.$this->var["r_authorrating"].',
@@ -362,7 +412,7 @@ class cookbook_shortcodes extends e_shortcode
        
         if(e107::getPlugPref('cookbook', 'recipe_difficulty') == false)
         {
-            return false;
+            return "&nbsp;";
         }
 
         // Check if we want to display the stars
@@ -431,6 +481,7 @@ class cookbook_shortcodes extends e_shortcode
 
         $options = array(); 
         $options['label'] = $label;
+        $options['template'] = "RATE|VOTES";
 
         return e107::getForm()->rate("cookbook", $this->var["r_id"], $options);
     }
@@ -447,7 +498,7 @@ class cookbook_shortcodes extends e_shortcode
     {
         // Retrieve keywords from db. Stop when no keywords are present.
         $keywords = $this->var['r_keywords'];
-        if(!$keywords) return '';
+        if(!$keywords) return '&nbsp;';
 
         // Define other variables
         $ret            = $urlparms = array();

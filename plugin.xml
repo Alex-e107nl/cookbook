@@ -12,7 +12,7 @@
 		<link url="admin_config.php" description="" icon="images/icon_32.png" iconSmall="images/icon_16.png" icon128="images/icon_128.png" primary="true">LAN_CONFIGURE</link>
 	</adminLinks>
 	<siteLinks>
-		<link url="{e_PLUGIN}cookbook/index.php" icon="images/icon_32.png" sef='index' perm='everyone'>Cookbook</link>
+		<link url="{e_PLUGIN}cookbook/index.php" icon="{e_PLUGIN}cookbook/images/icon_32.png" sef='index' perm='everyone'>Cookbook</link>
 	</siteLinks>
 	<pluginPrefs>
 		<pref name='overview_format'>overview_grid</pref>
@@ -24,16 +24,19 @@
 		<pref name='recipe_authorrating'>0</pref>
 		<pref name='recipe_userrating'>0</pref>
 		<pref name='recipe_userratingclass'>0</pref>
+		<pref name='recipe_activetime'>0</pref>
 		<pref name='recipe_difficulty'>1</pref>
 		<pref name='recipe_showrelated'>1</pref>
 		<pref name='recipe_showprint'>1</pref>
 		<pref name='recipe_showbookmark'>1</pref>
 		<pref name='recipe_showsharing'>1</pref>
 		<pref name='submission_userclass'>254</pref>
+		<pref name='recipe_ingredientcheckboxes'>0</pref>
 		<pref name='devmode'>0</pref>
 	</pluginPrefs>
 	<mediaCategories>
-		<category type="image">Cookbook</category>
+		<category type="image" sef="cookbook-recipes" perm="everyone">Cookbook recipes</category>
+		<category type="image" sef="cookbook-categories" perm="everyone">Cookbook categories</category>
 	</mediaCategories>
 	<copyright>Created by Tijn Kuyper. Released under the terms and conditions of the Apache License 2.0.</copyright>
 </e107Plugin>

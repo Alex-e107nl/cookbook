@@ -11,9 +11,14 @@
 define("LAN_CB_MANAGE_RECIPES",  	"Recepten overzicht");
 define("LAN_CB_CREATE_RECIPE",  	"Voeg een recept toe");
 
+define("LAN_CB_THUMBNAIL_LOCAL", "Lokaal");
+define("LAN_CB_THUMBNAIL_REMOTE", "Extern");
+define("LAN_CB_THUMBNAIL_REMOTE_PLACEHOLDER", "bijv.. http://een-website.nl/afbeelding.jpg");
+define("LAN_CB_THUMBNAIL_REMOTE_TITLE", "Dit zal een lokale afbeelding die ingesteld is overschrijven.");
 
 // HELP
-define("LAN_CB_HELP_TIME", 			"Bereidingstijd in minuten.");
+define("LAN_CB_HELP_ACTIVETIME",    "Actieve bereidingstijd in minuten.");
+define("LAN_CB_HELP_TOTALTIME",     "Totale bereidingstijd in minuten.");
 define("LAN_CB_HELP_PERSONS", 		"Aantal personen");
 define("LAN_CB_HELP_KEYWORDS", 		"Keywords die bij dit recept passen");
 define("LAN_CB_HELP_AUTHORRATING",  "Beoordeling van het recept door de auteur. Tussen de 1 en 3 sterren.");
@@ -47,6 +52,9 @@ define("LAN_CB_PREF_LATEST_ITEMSPP_HELP",   "Definieert het aantal recepten dat 
 
 define("LAN_CB_PREF_DATEFORMAT",        "Datumnotitie"); 
 define("LAN_CB_PREF_DATEFORMAT_HELP",   "Gebruik de datumnotitie zoals ingesteld bij Beheerscherm > Voorkeuren > Datumweergave");
+define("LAN_CB_PREF_DATEFORMAT_LONG",   "Lange datumnotatie");
+define("LAN_CB_PREF_DATEFORMAT_SHORT",   "Korte datumnotatie");
+define("LAN_CB_PREF_DATEFORMAT_RELATIVE", "Relatieve datumnotatie");
 
     //1 - Posting options
 define("LAN_CB_PREF_COMMENTS",      "Commentaar op recepten");
@@ -67,6 +75,9 @@ define("LAN_CB_PREF_DIFFICULTYLEVEL_HELP", "Recepten kunnen drie moeilijksheidsg
 
 define("LAN_CB_PREF_SHOWRELATED",      "Gerelateerde recepten");
 define("LAN_CB_PREF_SHOWRELATED_HELP", "Laat recepten gerelateerd aan het huidige recept zien");
+
+define("LAN_CB_PREF_ACTIVETIME",      "Gebruik actieve tijd");
+define("LAN_CB_PREF_ACTIVETIME_HELP", "Recepten kunnen naast de totale tijd, ook de benodigde actieve tijd specificeren.");
 
 define("LAN_CB_PREF_SHOWPRINT",      "Print optie");
 define("LAN_CB_PREF_SHOWPRINT_HELP", "Gebruikers hebben de mogelijkheid om een print-vriendelijke versie van het recept te printen");

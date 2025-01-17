@@ -118,14 +118,25 @@ class cookbook_categories_ui extends e_admin_ui
 			'class' 		=> 'left', 
 			'thclass' 		=> 'left',  
 		),
-		'c_thumbnail' => array( 
+		'c_thumbnail' 		=> array( 
+			'title' 		=> LAN_IMAGE, 	
+			'type' 			=> 'method', 
+			'data' 			=> 'str', 
+			'width' 		=> '100px', 
+			'help' 			=> '', 
+			'readParms' 	=> 'thumb=100x100', 
+			'writeParms' 	=> 'media=cookbook_image_2', 
+			'class' 		=> 'left', 
+			'thclass' 		=> 'left',  
+		),
+		/*'c_thumbnail' => array( 
 	  		'title' 		=> LAN_IMAGE, 			
 	  		'type' 			=> 'image', 
 	  		'data'			=> 'str',
 	  		'width' 		=> '110px',	
 	  		'readParms'		=> array('thumb' => '80x80'), 
 	  		'writeParms'	=> array('media' => 'cookbook'),
-	  	),
+	  	),*/
 		'c_name' => array(
 			'title' 		=> LAN_NAME, 	
 			'type' 			=> 'text', 
@@ -170,6 +181,13 @@ class cookbook_categories_ui extends e_admin_ui
 		// Automatically generate and set SEF of category name
 		$new_data['c_name_sef'] = empty($new_data['c_name_sef']) ?  eHelper::title2sef($new_data['c_name']) : eHelper::secureSef($new_data['c_name_sef']);
 
+		// Check if remote URL for recipe category thumbnail is set. If yes, override the c_thumbnail field. 
+		if(!empty($new_data['c_thumbnail_remote']))
+		{
+			$new_data['c_thumbnail'] = $new_data['c_thumbnail_remote'];
+		}
+
+
 		return $new_data;
 	}
 
@@ -190,6 +208,12 @@ class cookbook_categories_ui extends e_admin_ui
 		// Automatically update SEF
 		$new_data['c_name_sef'] = eHelper::title2sef($new_data['c_name']);
 
+		// Check if remote URL for recipe category thumbnail is set. If yes, override the c_thumbnail field. 
+		if(!empty($new_data['c_thumbnail_remote']))
+		{
+			$new_data['c_thumbnail'] = $new_data['c_thumbnail_remote'];
+		}
+
 		return $new_data;
 	}
 
@@ -207,6 +231,56 @@ class cookbook_categories_ui extends e_admin_ui
 
 class cookbook_categories_form_ui extends e_admin_form_ui
 {
+
+	function c_thumbnail($curVal, $mode)
+	{
+		switch($mode)
+		{
+			// List Page
+			case 'read': 
+				return e107::getParser()->toImage($curVal);
+				//break;
+
+			// Edit Page
+			case 'write': 
+
+				if(strpos($curVal,'http') === 0)
+				{
+					$val1 = null;
+					$val2 = $curVal;
+				}
+				else
+				{
+					$val1 = $curVal;
+					$val2 = null;
+				}
+
+				$tab1 = $this->imagepicker('c_thumbnail', $val1, null, "media=cookbook_image_2");
+
+
+				$tab2 = "<p>".$this->text('c_thumbnail_remote', $val2, 255, array('size' => 'xxlarge', 'placeholder' => LAN_CB_THUMBNAIL_REMOTE_PLACEHOLDER, 'title' => LAN_CB_THUMBNAIL_REMOTE_TITLE))."</p>";
+
+				if(!empty($val2))
+				{
+					$tab2 .= e107::getParser()->toImage($val2);
+				}
+
+				$tabText = array(
+					'local'  => array('caption' => LAN_CB_THUMBNAIL_LOCAL, 'text' => $tab1),
+					'remote' => array('caption' => LAN_CB_THUMBNAIL_REMOTE, 'text' => $tab2),
+				);
+
+				return $this->tabs($tabText);
+				//break;
+
+			case 'filter':
+			case 'batch':
+				return "";
+				//break;
+		}
+
+		return;
+	}
 
 }
 
@@ -254,14 +328,25 @@ class cookbook_recipes_ui extends e_admin_ui
 			'class' 		=> 'left', 
 			'thclass' 		=> 'left',  
 		),
-	  	'r_thumbnail' => array( 
+		'r_thumbnail' 		=> array( 
+			'title' 		=> LAN_IMAGE, 	
+			'type' 			=> 'method', 
+			'data' 			=> 'str', 
+			'width' 		=> '100px', 
+			'help' 			=> '', 
+			'readParms' 	=> 'thumb=100x100', 
+			'writeParms' 	=> 'media=cookbook_image', 
+			'class' 		=> 'left', 
+			'thclass' 		=> 'left',  
+		),
+	  	/*'r_thumbnail' => array( 
 	  		'title' 		=> LAN_IMAGE, 			
 	  		'type' 			=> 'image', 
 	  		'data'			=> 'str',
 	  		'width' 		=> '110px',	
 	  		'readParms'		=> array('thumb' => '80x80'), 
 	  		'writeParms'	=> array('media' => 'cookbook'),
-	  	),
+	  	),*/
 	  	'r_name' => array( 
 	  		'title' 		=> LAN_TITLE, 			
 	  		'type' 			=> 'text', 		
@@ -327,13 +412,25 @@ class cookbook_recipes_ui extends e_admin_ui
 	  		'class' 		=> 'left', 
 	  		'thclass' 		=> 'left',  
 	  	),
-	  	'r_time' =>   array(
-	  		'title' 		=> LAN_CB_TIME, 	
+	  	'r_activetime' =>   array(
+	  		'title' 		=> LAN_CB_ACTIVETIME, 	
+	  		'type' 			=> 'hidden', 	
+	  		'data' 			=> 'int', 
+	  		'width' 		=> 'auto', 
+	  		'inline' 		=> true, 
+	  		'help' 			=> LAN_CB_HELP_ACTIVETIME, 
+	  		'readParms' 	=> array(), 
+	  		'writeParms' 	=> array(),
+	  		'class' 		=> 'left', 
+	  		'thclass' 		=> 'left',  
+	  	),
+	  	'r_totaltime' =>   array(
+	  		'title' 		=> LAN_CB_TOTALTIME, 	
 	  		'type' 			=> 'number', 	
 	  		'data' 			=> 'int', 
 	  		'width' 		=> 'auto', 
 	  		'inline' 		=> true, 
-	  		'help' 			=> LAN_CB_HELP_TIME, 
+	  		'help' 			=> LAN_CB_HELP_TOTALTIME, 
 	  		'readParms' 	=> array(), 
 	  		'writeParms' 	=> array(),
 	  		'class' 		=> 'left', 
@@ -509,6 +606,13 @@ class cookbook_recipes_ui extends e_admin_ui
 			'help'	=> LAN_CB_PREF_USERRATINGCLASS_HELP,
 			'tab'	=> 2,
 		),
+		'recipe_activetime' => array(
+			'title'	=> LAN_CB_PREF_ACTIVETIME,
+			'type'	=> 'boolean',
+			'data'	=> 'int',
+			'help'	=> LAN_CB_PREF_ACTIVETIME_HELP,
+			'tab'	=> 2,
+		),
 		'recipe_difficulty' => array(
 			'title'	=> LAN_CB_PREF_DIFFICULTYLEVEL,
 			'type'	=> 'boolean',
@@ -544,12 +648,22 @@ class cookbook_recipes_ui extends e_admin_ui
 			'help'	=> LAN_CB_PREF_SHOWSHARING_HELP,
 			'tab'	=> 2,
 		),
+		'recipe_ingredientcheckboxes' => array(
+			'title'	=> LAN_CB_PREF_INGREDIENT_CHECKBOXES,
+			'type'	=> 'boolean',
+			'data'	=> 'int',
+			'help'	=> LAN_CB_PREF_INGREDIENT_CHECKBOXES_HELP,
+			'tab'	=> 2,
+		),
 	);
+
+	protected $category = array();
 
 	public function init()
 	{
 		$sql = e107::getDb();
 		$pref = e107::pref('cookbook');
+
 
 		// Link recipes with categories
 		if($sql->select('cookbook_categories'))
@@ -577,6 +691,12 @@ class cookbook_recipes_ui extends e_admin_ui
 			$this->fields['r_authorrating']['type'] = 'number';
 		}
 
+		// Active time
+		if($pref['recipe_activetime'])
+		{
+			// Change type from 'hidden' to 'number'
+			$this->fields['r_activetime']['type'] = 'number';
+		}
 
 		// Recipe difficulty 
 		if($pref['recipe_difficulty'])
@@ -595,9 +715,9 @@ class cookbook_recipes_ui extends e_admin_ui
 		// Preferences 
 			// Date format: choose between 'long|short|relative', as defined in Preferences > Date Display options
 			$this->prefs['date_format']['writeParms'] = array(
-				"long" 		=> "long", // TODO LAN
-				"short" 	=> "short", // TODO LAN
-				"relative" 	=> "relative" // TODO LAN
+				"long" 		=> LAN_CB_PREF_DATEFORMAT_LONG, 
+				"short" 	=> LAN_CB_PREF_DATEFORMAT_SHORT, 
+				"relative" 	=> LAN_CB_PREF_DATEFORMAT_RELATIVE 
 			); 
 
 			// Overview format: allow to choose between a Grid overview or Datatables
@@ -629,6 +749,12 @@ class cookbook_recipes_ui extends e_admin_ui
 	{
 		// Process image thumbnails
 		//$new_data['r_thumbnail'] = $this->processThumbs($new_data['r_thumbnail']);
+
+		// Check if remote URL for recipe thumbnail is set. If yes, override the r_thumbnail field. 
+		if(!empty($new_data['r_thumbnail_remote']))
+		{
+			$new_data['r_thumbnail'] = $new_data['r_thumbnail_remote'];
+		}
 
 		// Default recipe date is the creation date
 		if(empty($new_data['r_datestamp']))
@@ -664,6 +790,12 @@ class cookbook_recipes_ui extends e_admin_ui
 	{
 		// Process image thumnails
 		//$new_data['r_thumbnail'] = $this->processThumbs($new_data['r_thumbnail']);
+
+		// Check if remote URL for recipe thumbnail is set. If yes, override the r_thumbnail field. 
+		if(!empty($new_data['r_thumbnail_remote']))
+		{
+			$new_data['r_thumbnail'] = $new_data['r_thumbnail_remote'];
+		}
 
 		// Default recipe date is the creation date
 		if(empty($new_data['r_datestamp']))
@@ -734,6 +866,57 @@ class cookbook_recipes_ui extends e_admin_ui
 
 class cookbook_recipes_form_ui extends e_admin_form_ui
 {
+	function r_thumbnail($curVal, $mode)
+	{
+		switch($mode)
+		{
+			// List Page
+			case 'read': 
+				return e107::getParser()->toImage($curVal);
+				//break;
+
+			// Edit Page
+			case 'write': 
+
+				if(strpos($curVal,'http') === 0)
+				{
+					$val1 = null;
+					$val2 = $curVal;
+				}
+				else
+				{
+					$val1 = $curVal;
+					$val2 = null;
+				}
+
+				$tab1 = $this->imagepicker('r_thumbnail', $val1, null, "media=cookbook_image");
+
+
+				$tab2 = "<p>".$this->text('r_thumbnail_remote', $val2, 255, array('size' => 'xxlarge', 'placeholder' => LAN_CB_THUMBNAIL_REMOTE_PLACEHOLDER, 'title' => LAN_CB_THUMBNAIL_REMOTE_TITLE))."</p>";
+
+				if(!empty($val2))
+				{
+					$tab2 .= e107::getParser()->toImage($val2);
+				}
+
+				$tabText = array(
+					'local'  => array('caption' => LAN_CB_THUMBNAIL_LOCAL, 'text' => $tab1),
+					'remote' => array('caption' => LAN_CB_THUMBNAIL_REMOTE, 'text' => $tab2),
+				);
+
+				return $this->tabs($tabText);
+				//break;
+
+			case 'filter':
+			case 'batch':
+				return "";
+				//break;
+		}
+
+		return;
+	}
+
+
 
 	// Custom Method/Function 
 	/*
